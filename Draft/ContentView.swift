@@ -15,13 +15,21 @@ struct ContentView: View {
         NavigationSplitView {
             List(viewModel.notes, selection: $viewModel.selectedNote) { note in
                 NavigationLink(value: note) {
-                    VStack(alignment: .leading) {
-                        Text(note.title.isEmpty ? "Untitled Note" : note.title)
-                            .font(.headline)
-                        Text(note.body.isEmpty ? "No content" : note.body)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .lineLimit(2)
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            Text(note.title.isEmpty ? "Untitled Note" : note.title)
+                                .font(.headline)
+                            Text(note.body.isEmpty ? "No content" : note.body)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .lineLimit(2)
+                        }
+                        Spacer()
+                        if note.isUnsynced {
+                            Image(systemName: "cloud.slash")
+                                .foregroundColor(.secondary)
+                                .font(.caption)
+                        }
                     }
                 }
                 .contextMenu {

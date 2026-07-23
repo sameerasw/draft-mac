@@ -14,6 +14,7 @@ struct Note: Identifiable, Hashable {
     var body: String
     var updatedAt: Date
     var fileURL: URL
+    var isUnsynced: Bool = false
 
     static func parse(from fileURL: URL) -> Note? {
         guard let content = try? String(contentsOf: fileURL, encoding: .utf8) else { return nil }
@@ -45,11 +46,13 @@ struct Note: Identifiable, Hashable {
                 }
             }
 
-            return Note(noteId: id, title: title, body: body, updatedAt: updatedAt, fileURL: fileURL)
+            let isUnsynced = GitSyncManager.shared.isFileUnsynced(fileURL)
+            return Note(noteId: id, title: title, body: body, updatedAt: updatedAt, fileURL: fileURL, isUnsynced: isUnsynced)
         } else {
             let title = fileURL.deletingPathExtension().lastPathComponent
             let updatedAt = (try? fileURL.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? Date()
-            return Note(noteId: UUID().uuidString, title: title, body: content, updatedAt: updatedAt, fileURL: fileURL)
+            let isUnsynced = GitSyncManager.shared.isFileUnsynced(fileURL)
+            return Note(noteId: UUID().uuidString, title: title, body: content, updatedAt: updatedAt, fileURL: fileURL, isUnsynced: isUnsynced)
         }
     }
 }

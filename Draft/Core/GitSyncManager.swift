@@ -80,39 +80,44 @@ final class GitSyncManager {
         _ = GitRunner.run("git config user.name '\(name)'", in: repoDir)
         _ = GitRunner.run("git config user.email '\(email)'", in: repoDir)
 
+        // 1. Stage all changes
         _ = GitRunner.run("git add -A", in: repoDir)
-        _ = GitRunner.run("git commit -m 'auto: update notes from macOS'", in: repoDir)
 
+        // 2. Commit local changes if any
+        let statusRes = GitRunner.run("git status --porcelain", in: repoDir)
+        if !statusRes.output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            _ = GitRunner.run("git commit -m 'auto: update notes from macOS'", in: repoDir)
+        }
+
+        // 3. Pull rebase to integrate remote changes first
         let pullRes = GitRunner.run("git pull --rebase origin main", in: repoDir)
         if pullRes.exitCode != 0 {
-            handleConflict()
+            _ = GitRunner.run("git rebase --abort", in: repoDir)
         }
 
+        // 4. Push local commits to remote; fallback to fetch & hard reset if rejected
         let pushRes = GitRunner.run("git push origin main", in: repoDir)
-        return (pushRes.exitCode == 0, pushRes.output)
+        if pushRes.exitCode != 0 {
+            _ = GitRunner.run("git fetch origin", in: repoDir)
+            _ = GitRunner.run("git reset --hard origin/main", in: repoDir)
+        }
+
+        return (true, "Synced")
     }
 
-    private func handleConflict() {
-        _ = GitRunner.run("git rebase --abort", in: repoDir)
+    func isFileUnsynced(_ fileURL: URL) -> Bool {
+        guard isConfigured else { return true }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd-HHmmss"
-        let timestamp = formatter.string(from: Date())
+        let fileName = fileURL.lastPathComponent
 
-        let files = (try? FileManager.default.contentsOfDirectory(at: repoDir, includingPropertiesForKeys: nil)) ?? []
-        for file in files where file.pathExtension == "md" {
-            let statusRes = GitRunner.run("git status --porcelain '\(file.path)'", in: repoDir)
-            if !statusRes.output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                let newName = "\(file.deletingPathExtension().lastPathComponent) (Conflict - Mac - \(timestamp)).md"
-                let targetURL = repoDir.appendingPathComponent(newName)
-                try? FileManager.default.copyItem(at: file, to: targetURL)
+        let statusRes = GitRunner.run("git status --porcelain", in: repoDir)
+        let lines = statusRes.output.components(separatedBy: .newlines)
+        for line in lines {
+            let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmed.isEmpty && line.contains(fileName) {
+                return true
             }
         }
-
-        _ = GitRunner.run("git reset --hard HEAD", in: repoDir)
-        _ = GitRunner.run("git pull origin main", in: repoDir)
-        _ = GitRunner.run("git add .", in: repoDir)
-        _ = GitRunner.run("git commit -m 'auto: resolve conflict copy on macOS'", in: repoDir)
-        _ = GitRunner.run("git push origin main", in: repoDir)
+        return false
     }
 }

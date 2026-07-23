@@ -52,22 +52,35 @@ final class NotesViewModel: ObservableObject {
     }
 
     func createNote() {
-        let newNote = repo.createNote()
+        var newNote = repo.createNote()
+        newNote.isUnsynced = true
         loadNotes()
+        if let idx = notes.firstIndex(where: { $0.id == newNote.id }) {
+            notes[idx].isUnsynced = true
+        }
         selectedNote = newNote
     }
 
     func updateSelectedNote(title: String, body: String) {
         guard var note = selectedNote else { return }
+        if note.title == title && note.body == body { return }
         note.title = title
         note.body = body
+        note.isUnsynced = true
         selectedNote = note
+
+        if let idx = notes.firstIndex(where: { $0.id == note.id }) {
+            notes[idx] = note
+        }
 
         saveWorkItem?.cancel()
         let item = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
             self.repo.saveNote(note)
-            self.loadNotes()
+            DispatchQueue.main.async {
+                self.loadNotes()
+                self.syncNow()
+            }
         }
         saveWorkItem = item
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: item)
