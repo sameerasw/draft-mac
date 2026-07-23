@@ -65,6 +65,8 @@ struct ContentView: View {
                     ))
                     .font(.body)
                     .padding()
+                    .scrollContentBackground(.hidden)
+                    .background(.clear)
                 }
             } else {
                 Text("Select or create a note to begin")

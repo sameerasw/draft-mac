@@ -23,6 +23,7 @@ final class NotesViewModel: ObservableObject {
         self.isConfigured = GitSyncManager.shared.isConfigured
         if isConfigured {
             loadNotes()
+            syncNow()
         }
     }
 
