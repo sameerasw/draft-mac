@@ -80,7 +80,7 @@ final class GitSyncManager {
         _ = GitRunner.run("git config user.name '\(name)'", in: repoDir)
         _ = GitRunner.run("git config user.email '\(email)'", in: repoDir)
 
-        _ = GitRunner.run("git add .", in: repoDir)
+        _ = GitRunner.run("git add -A", in: repoDir)
         _ = GitRunner.run("git commit -m 'auto: update notes from macOS'", in: repoDir)
 
         let pullRes = GitRunner.run("git pull --rebase origin main", in: repoDir)

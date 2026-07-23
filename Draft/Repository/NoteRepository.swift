@@ -36,14 +36,14 @@ final class NoteRepository {
         """
 
         try? content.write(to: fileURL, atomically: true, encoding: .utf8)
-        return Note(id: id, title: title, body: "", updatedAt: Date(timeIntervalSince1970: timestamp), fileURL: fileURL)
+        return Note(noteId: id, title: title, body: "", updatedAt: Date(timeIntervalSince1970: timestamp), fileURL: fileURL)
     }
 
     func saveNote(_ note: Note) {
         let timestamp = Date().timeIntervalSince1970
         let content = """
         ---
-        id: "\(note.id)"
+        id: "\(note.noteId)"
         title: "\(note.title)"
         updated_at: \(Int(timestamp))
         ---

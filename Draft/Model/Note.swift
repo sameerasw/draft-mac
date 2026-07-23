@@ -8,7 +8,8 @@
 import Foundation
 
 struct Note: Identifiable, Hashable {
-    let id: String
+    var id: String { fileURL.path }
+    let noteId: String
     var title: String
     var body: String
     var updatedAt: Date
@@ -44,11 +45,11 @@ struct Note: Identifiable, Hashable {
                 }
             }
 
-            return Note(id: id, title: title, body: body, updatedAt: updatedAt, fileURL: fileURL)
+            return Note(noteId: id, title: title, body: body, updatedAt: updatedAt, fileURL: fileURL)
         } else {
             let title = fileURL.deletingPathExtension().lastPathComponent
             let updatedAt = (try? fileURL.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? Date()
-            return Note(id: UUID().uuidString, title: title, body: content, updatedAt: updatedAt, fileURL: fileURL)
+            return Note(noteId: UUID().uuidString, title: title, body: content, updatedAt: updatedAt, fileURL: fileURL)
         }
     }
 }
