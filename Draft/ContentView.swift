@@ -37,16 +37,6 @@ struct ContentView: View {
                         Image(systemName: "square.and.pencil")
                     }
                 }
-                ToolbarItem(placement: .automatic) {
-                    Button(action: { viewModel.syncNow() }) {
-                        Image(systemName: viewModel.isSyncing ? "arrow.triangle.2.circlepath" : "arrow.clockwise")
-                    }
-                }
-                ToolbarItem(placement: .automatic) {
-                    Button(action: { showSetupSheet = true }) {
-                        Image(systemName: "gear")
-                    }
-                }
             }
         } detail: {
             if let selectedNote = viewModel.selectedNote {
@@ -83,6 +73,18 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.willHideNotification)) { _ in
             viewModel.syncNow()
+        }
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button(action: { viewModel.syncNow() }) {
+                    Image(systemName: viewModel.isSyncing ? "arrow.triangle.2.circlepath" : "arrow.clockwise")
+                }
+            }
+            ToolbarItem(placement: .automatic) {
+                Button(action: { showSetupSheet = true }) {
+                    Image(systemName: "gear")
+                }
+            }
         }
     }
 }
