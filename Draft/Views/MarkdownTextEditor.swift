@@ -13,14 +13,16 @@ struct MarkdownTextEditor: View {
     @Binding var text: String
     @Binding var title: String
     var documentId: String = "draft-note"
+    var isSlashMenuOpen: Bool = false
+    var onInlinePreviewKey: ((InlinePreviewKey) -> Bool)? = nil
 
     var body: some View {
-        NativeTextViewWrapper(
+        CustomMarkdownTextView(
             text: $text,
+            title: $title,
             documentId: documentId,
-            header: AnyView(TitleHeaderView(title: $title)),
-            headerCollapsedHeight: 0,
-            headerExpanded: true
+            isSlashMenuOpen: isSlashMenuOpen,
+            onKeyCommand: onInlinePreviewKey
         )
     }
 }
