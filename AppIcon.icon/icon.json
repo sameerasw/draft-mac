@@ -1,0 +1,82 @@
+{
+  "features" : [
+    "refractivity",
+    "specular-location"
+  ],
+  "fill" : "automatic",
+  "groups" : [
+    {
+      "blur-material" : 0.04,
+      "layers" : [
+        {
+          "fill" : {
+            "solid" : "srgb:0.00000,1.00000,0.73721,1.00000"
+          },
+          "glass" : true,
+          "image-name" : "Frame 13 (3).svg",
+          "name" : "Frame 13 (3)"
+        }
+      ],
+      "position" : {
+        "scale" : 12.5,
+        "translation-in-points" : [
+          35.937111532587096,
+          0
+        ]
+      },
+      "refractivity" : {
+        "depth" : 0.21664062499999986,
+        "enabled" : true,
+        "strength" : 0.0777734375
+      },
+      "shadow" : {
+        "kind" : "layer-color",
+        "opacity" : 0.68
+      },
+      "specular" : "inside",
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.65
+      }
+    },
+    {
+      "blur-material" : 0.26,
+      "layers" : [
+        {
+          "fill" : {
+            "solid" : "srgb:0.00000,0.69661,0.56089,1.00000"
+          },
+          "image-name" : "Frame 13 (2).svg",
+          "name" : "Frame 13 (2)"
+        }
+      ],
+      "position" : {
+        "scale" : 12.5,
+        "translation-in-points" : [
+          35.937111532587096,
+          0
+        ]
+      },
+      "refractivity" : {
+        "depth" : 0.29600000000000004,
+        "enabled" : true,
+        "strength" : 0.6935546875
+      },
+      "shadow" : {
+        "kind" : "layer-color",
+        "opacity" : 0.5
+      },
+      "specular" : "inside",
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.33
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

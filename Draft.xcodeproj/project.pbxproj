@@ -6,8 +6,13 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B9BF706930129C790014205B /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = B9BF706830129C790014205B /* AppIcon.icon */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B99F9C5230125604002812CE /* Draft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Draft.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9BF706830129C790014205B /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -31,6 +36,7 @@
 			isa = PBXGroup;
 			children = (
 				B99F9C5430125604002812CE /* Draft */,
+				B9BF706830129C790014205B /* AppIcon.icon */,
 				B99F9C5330125604002812CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,6 +108,7 @@
 		B99F9C5030125604002812CE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				B9BF706930129C790014205B /* AppIcon.icon in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
