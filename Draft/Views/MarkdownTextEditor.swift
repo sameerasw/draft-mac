@@ -25,9 +25,9 @@ struct MarkdownTextEditor: View {
     private var titleHeader: some View {
         VStack(alignment: .leading, spacing: 0) {
             TextField("Untitled", text: $title)
-                .font(.system(size: 28, weight: .bold))
+                .font(.system(size: 48, weight: .semibold))
                 .textFieldStyle(.plain)
-                .padding(.top, 24)
+                .padding(.top, 64)
                 .padding(.trailing, 32)
 
             SquigglyLine()
@@ -35,7 +35,7 @@ struct MarkdownTextEditor: View {
                 .frame(height: 6)
                 .padding(.trailing, 32)
                 .padding(.top, 6)
-                .padding(.bottom, 12)
+                .padding(.bottom, 24)
         }
     }
 }

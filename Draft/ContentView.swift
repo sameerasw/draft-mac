@@ -50,7 +50,8 @@ struct ContentView: View {
             if let selectedNote = viewModel.selectedNote {
                 // Isolated editor view — its re-renders don't bubble up to the list
                 NoteEditorView(note: selectedNote, viewModel: viewModel)
-                    .id(selectedNote.id) // force fresh instance on note switch
+                    .id(selectedNote.id)
+                    .ignoresSafeArea(edges: .top)
             } else {
                 Text("Select or create a note to begin")
                     .foregroundColor(.secondary)
@@ -79,6 +80,7 @@ struct ContentView: View {
                 }
             }
         }
+        .toolbarBackground(.hidden, for: .windowToolbar)
     }
 }
 
