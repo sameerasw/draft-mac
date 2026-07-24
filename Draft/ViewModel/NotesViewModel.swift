@@ -11,19 +11,26 @@ import Combine
 @MainActor
 final class NotesViewModel: ObservableObject {
     @Published var notes: [Note] = []
-    @Published var selectedNote: Note?
+    @Published var selectedNote: Note? {
+        didSet {
+            if oldValue?.id != selectedNote?.id {
+                onNoteSwitched()
+            }
+        }
+    }
     @Published var isConfigured: Bool = false
     @Published var isSyncing: Bool = false
     @Published var cloneError: String?
 
     private let repo = NoteRepository()
     private var saveWorkItem: DispatchWorkItem?
+    private var lastSyncTime: Date = .distantPast
 
     init() {
         self.isConfigured = GitSyncManager.shared.isConfigured
         if isConfigured {
             loadNotes()
-            syncNow()
+            syncNow(force: true)
         }
     }
 
@@ -74,21 +81,34 @@ final class NotesViewModel: ObservableObject {
             guard let self = self else { return }
             self.repo.saveNote(note)
             DispatchQueue.main.async {
-                // Only publish once per debounce window — not per keystroke
+                // Save locally and update state without triggering git push/pull every second
                 self.selectedNote = note
                 if let idx = self.notes.firstIndex(where: { $0.id == note.id }) {
                     self.notes[idx] = note
                 }
-                self.syncNow()
             }
         }
         saveWorkItem = item
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: item)
     }
 
-    func syncNow() {
+    func onNoteSwitched() {
+        // Automatically sync when switching notes
+        syncNow(force: true)
+    }
+
+    func onAppFocusLost() {
+        // Only sync on app focus loss if at least 1 minute has passed since last sync
+        let now = Date()
+        if now.timeIntervalSince(lastSyncTime) >= 60.0 {
+            syncNow(force: true)
+        }
+    }
+
+    func syncNow(force: Bool = false) {
         guard isConfigured else { return }
         isSyncing = true
+        lastSyncTime = Date()
 
         DispatchQueue.global(qos: .userInitiated).async {
             let res = GitSyncManager.shared.sync()
@@ -107,6 +127,6 @@ final class NotesViewModel: ObservableObject {
             selectedNote = nil
         }
         loadNotes()
-        syncNow()
+        syncNow(force: true)
     }
 }

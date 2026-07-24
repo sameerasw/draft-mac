@@ -32,8 +32,8 @@ struct ContentView: View {
                 showSetupSheet = true
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSApplication.willHideNotification)) { _ in
-            viewModel.syncNow()
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.willResignActiveNotification)) { _ in
+            viewModel.onAppFocusLost()
         }
         .toolbar {
             ToolbarItemGroup(placement: .automatic) {
