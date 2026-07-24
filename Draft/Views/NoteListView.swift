@@ -25,11 +25,29 @@ struct NoteListView: View {
         .scrollContentBackground(.hidden)
         .navigationTitle("Notes")
         .toolbar {
+            ToolbarItem(placement: .navigation) {
+                Button(action: toggleSidebar) {
+                    Image(systemName: "sidebar.left")
+                }
+                .keyboardShortcut("s", modifiers: [.command, .shift])
+            }
+            .hidden()
+
             ToolbarItem(placement: .primaryAction) {
                 Button(action: { viewModel.createNote() }) {
                     Image(systemName: "square.and.pencil")
                 }
+                .keyboardShortcut("n", modifiers: .command)
             }
         }
     }
+}
+
+private func toggleSidebar() {
+#if os(macOS)
+    NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+#else
+    // For iOS / iPadOS
+    UIApplication.shared.sendAction(#selector(UISplitViewController.toggleSidebar(_:)), to: nil, from: nil, for: nil)
+#endif
 }

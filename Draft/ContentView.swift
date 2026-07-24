@@ -36,19 +36,26 @@ struct ContentView: View {
             viewModel.syncNow()
         }
         .toolbar {
-            ToolbarItem(placement: .automatic) {
-                Button(action: { viewModel.syncNow() }) {
-                    Image(systemName: viewModel.isSyncing ? "arrow.triangle.2.circlepath" : "arrow.clockwise")
+            ToolbarItemGroup(placement: .automatic) {
+                    Button(action: { viewModel.syncNow() }) {
+                        if viewModel.isSyncing {
+                            ProgressView()
+                                .controlSize(.small)
+                        } else {
+                            Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90.icloud")
+                        }
+                    }
+                    .keyboardShortcut("s", modifiers: .command)
+
+                    Button(action: { showSetupSheet = true }) {
+                        Image(systemName: "gear")
+                    }
+                    .keyboardShortcut(",", modifiers: .command)
                 }
-            }
-            ToolbarItem(placement: .automatic) {
-                Button(action: { showSetupSheet = true }) {
-                    Image(systemName: "gear")
-                }
-            }
         }
         .background(VisualEffectBlur(material: .fullScreenUI, blendingMode: .behindWindow).ignoresSafeArea())
         .toolbarBackground(.hidden, for: .windowToolbar)
+        .navigationTitle(Text(""))
     }
 }
 
