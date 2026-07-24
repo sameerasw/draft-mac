@@ -3,3 +3,36 @@
 
 <img width="1928" height="1278" alt="CleanShot-Draft--20260724-12  59 07@2x" src="https://github.com/user-attachments/assets/105080c3-47c4-479c-9dbc-555047c47568" />
 
+## How to setup?
+1. Install the app
+2. Create a new GitHub repo (Keep it private for personal notes)
+3. Go to GitHub settings -> Developer Settings -> Personal Access Tokens -> Fine-grained Token
+4. Generate new token
+   - Set a prefered expiry time
+     <br><img width="534" height="194" alt="CleanShot-Helium-New Fine-grained Personal Access Token-20260724-3  18 52@2x" src="https://github.com/user-attachments/assets/758120d2-0cc6-4517-bb90-302cd968d5bf" />
+
+   - Change repository access to "Only select repositories"
+   - Select your notes repository
+     <br><img width="1266" height="712" alt="CleanShot-Helium-New Fine-grained Personal Access Token-20260724-3  19 08@2x" src="https://github.com/user-attachments/assets/97d10e74-027c-42e9-9cc2-7647103e6d1b" />
+
+   - "+ Add permissions" and check "Contents"
+     <br><img width="660" height="740" alt="CleanShot-Helium-New Fine-grained Personal Access Token-20260724-3  19 34@2x" src="https://github.com/user-attachments/assets/19a04119-c71e-4b78-a820-047aebb6ee92" />
+
+   - Set permission to Read and write
+     <br><img width="1542" height="610" alt="CleanShot-Helium-New Fine-grained Personal Access Token-20260724-3  19 42@2x" src="https://github.com/user-attachments/assets/ae6aa769-4fa2-455c-b77a-ae0294eb7967" />
+
+   - Generate token
+     <br><img width="278" height="90" alt="CleanShot-Helium-New Fine-grained Personal Access Token-20260724-3  19 49@2x" src="https://github.com/user-attachments/assets/603477aa-8f57-4ad2-988c-ccbf9f1c97b1" />
+   - Copy the token (This will not be available to view again)
+
+5. In the Draft app:
+   <br><img width="45%" alt="CleanShot-Draft--20260724-3  27 19@2x" src="https://github.com/user-attachments/assets/b6628e19-f36e-4d85-800b-42c0cd83d5aa" />
+
+   - Set your notes repository link
+   - Paste the personal access token
+   - Set your commit author name'
+   - Set commit author email
+  
+   - And "Save & Close"
+  
+7. Done! Enjoy :)
