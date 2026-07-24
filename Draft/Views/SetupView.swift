@@ -65,7 +65,7 @@ struct SetupView: View {
         }
         .padding()
         .frame(width: 450)
-        .onChange(of: viewModel.isConfigured) { isConfigured in
+        .onChange(of: viewModel.isConfigured) { _, isConfigured in
             if isConfigured {
                 dismiss()
             }

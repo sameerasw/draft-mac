@@ -68,18 +68,17 @@ final class NotesViewModel: ObservableObject {
         note.title = title
         note.body = body
         note.isUnsynced = true
-        selectedNote = note
-
-        if let idx = notes.firstIndex(where: { $0.id == note.id }) {
-            notes[idx] = note
-        }
 
         saveWorkItem?.cancel()
         let item = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
             self.repo.saveNote(note)
             DispatchQueue.main.async {
-                self.loadNotes()
+                // Only publish once per debounce window — not per keystroke
+                self.selectedNote = note
+                if let idx = self.notes.firstIndex(where: { $0.id == note.id }) {
+                    self.notes[idx] = note
+                }
                 self.syncNow()
             }
         }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B9515D6530132C54005420B6 /* MarkdownEngine in Frameworks */ = {isa = PBXBuildFile; productRef = B9515D6430132C54005420B6 /* MarkdownEngine */; };
+		B9515D6730132C54005420B6 /* MarkdownEngineCodeBlocks in Frameworks */ = {isa = PBXBuildFile; productRef = B9515D6630132C54005420B6 /* MarkdownEngineCodeBlocks */; };
+		B9515D6930132C54005420B6 /* MarkdownEngineLatex in Frameworks */ = {isa = PBXBuildFile; productRef = B9515D6830132C54005420B6 /* MarkdownEngineLatex */; };
 		B9BF706930129C790014205B /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = B9BF706830129C790014205B /* AppIcon.icon */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +30,9 @@
 		B99F9C4F30125604002812CE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				B9515D6730132C54005420B6 /* MarkdownEngineCodeBlocks in Frameworks */,
+				B9515D6530132C54005420B6 /* MarkdownEngine in Frameworks */,
+				B9515D6930132C54005420B6 /* MarkdownEngineLatex in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -66,6 +72,11 @@
 				B99F9C5430125604002812CE /* Draft */,
 			);
 			name = Draft;
+			packageProductDependencies = (
+				B9515D6430132C54005420B6 /* MarkdownEngine */,
+				B9515D6630132C54005420B6 /* MarkdownEngineCodeBlocks */,
+				B9515D6830132C54005420B6 /* MarkdownEngineLatex */,
+			);
 			productName = Draft;
 			productReference = B99F9C5230125604002812CE /* Draft.app */;
 			productType = "com.apple.product-type.application";
@@ -94,6 +105,9 @@
 			);
 			mainGroup = B99F9C4930125604002812CE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B9515D6330132C54005420B6 /* XCRemoteSwiftPackageReference "swift-markdown-engine" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B99F9C5330125604002812CE /* Products */;
 			projectDirPath = "";
@@ -328,6 +342,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B9515D6330132C54005420B6 /* XCRemoteSwiftPackageReference "swift-markdown-engine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nodes-app/swift-markdown-engine";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B9515D6430132C54005420B6 /* MarkdownEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9515D6330132C54005420B6 /* XCRemoteSwiftPackageReference "swift-markdown-engine" */;
+			productName = MarkdownEngine;
+		};
+		B9515D6630132C54005420B6 /* MarkdownEngineCodeBlocks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9515D6330132C54005420B6 /* XCRemoteSwiftPackageReference "swift-markdown-engine" */;
+			productName = MarkdownEngineCodeBlocks;
+		};
+		B9515D6830132C54005420B6 /* MarkdownEngineLatex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9515D6330132C54005420B6 /* XCRemoteSwiftPackageReference "swift-markdown-engine" */;
+			productName = MarkdownEngineLatex;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B99F9C4A30125604002812CE /* Project object */;
 	validationLevel = 1;
