@@ -22,6 +22,7 @@ struct NoteListView: View {
                 }
             }
         }
+        .scrollContentBackground(.hidden)
         .navigationTitle("Notes")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {

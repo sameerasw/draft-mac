@@ -47,6 +47,7 @@ struct ContentView: View {
                 }
             }
         }
+        .background(VisualEffectBlur(material: .fullScreenUI, blendingMode: .behindWindow).ignoresSafeArea())
         .toolbarBackground(.hidden, for: .windowToolbar)
     }
 }
