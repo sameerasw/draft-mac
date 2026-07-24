@@ -103,28 +103,18 @@ struct NoteEditorView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            TextField("Title", text: $title)
-                .font(.title)
-                .textFieldStyle(.plain)
-                .padding([.top, .horizontal])
-                .onChange(of: title) { _, newTitle in
-                    scheduleBodySave(title: newTitle, body: bodyText)
-                }
-
-            Divider()
-
-            MarkdownTextEditor(text: $bodyText, documentId: note.id)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .onChange(of: bodyText) { _, newBody in
-                    scheduleBodySave(title: title, body: newBody)
-                }
-                .padding()
-        }
+        MarkdownTextEditor(text: $bodyText, title: $title, documentId: note.id)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onChange(of: title) { _, newTitle in
+                scheduleBodySave(title: newTitle, body: bodyText)
+            }
+            .onChange(of: bodyText) { _, newBody in
+                scheduleBodySave(title: title, body: newBody)
+            }
+        .padding(.leading, 32)
     }
 
     private func scheduleBodySave(title: String, body: String) {
-        // The ViewModel already debounces internally (1 s), so just forward.
         viewModel.updateSelectedNote(title: title, body: body)
     }
 }
